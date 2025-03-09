@@ -75,7 +75,7 @@ app.get('/videocall', (req, res)=>{
 
 server.listen(port, ()=>{console.log(`server running at port http://localhost:${port}`)});
 
-
+export default app;
 
 
 
