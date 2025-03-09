@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VideoChat_App</title>
+  <link rel="stylesheet" href="/css/loginn.css">
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700;800&family=Poppins:wght@400;500&display=swap"
+	  rel="stylesheet">
+</head>
+<body>
+   
+
+      
+     
+    <div class="login-container">
+       
+    
+        <main class="login-card">
+          <h2>Login</h2>
+          <p>Hey, login to continue</p>
+    
+          <form action="/api/users/login" method="POST">
+            <!-- Email Input -->
+            <div class="input-group">
+              <span class="input-icon">✉️</span>
+              <input type="email" name="email" placeholder="Enter your Email" required>
+            </div>
+    
+            <!-- Password Input -->
+            <div class="input-group">
+              <span class="input-icon">🔒</span>
+              <input type="password" name="password" placeholder="Enter your password" id="password" required>
+              <span class="toggle-password">🙈</span>
+            </div>
+    
+    
+            <button type="submit" class="login-button">Login</button>
+          </form>
+    
+          <p class="register-text">
+            Don’t have an account? <a href="/register" class="register-link">Register</a>
+          </p>
+        </main>
+      </div>
+
+  <script src="/js/login.js"></script>
+
+
+
+  
+</body>
+</html>
