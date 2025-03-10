@@ -7,6 +7,7 @@ const secretKey =  'shazaniyuwebcampasss';
 // Register route
 const register =  async (req:any, res:any) => {
   const { username, email, password } = req.body;
+  console.log(username, email, password)
   try {
     const user = new User({ username, email, password });
     await user.save();

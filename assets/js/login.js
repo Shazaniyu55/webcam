@@ -8,45 +8,61 @@ togglePasswordIcon.addEventListener("click", () => {
 });
 
 
-
-document.getElementById('signUpForm').addEventListener('submit', async function(event) {
-  event.preventDefault(); 
-     
-
-  const formData = new FormData(this);
-  const data = Object.fromEntries(formData.entries());
-
- 
-  try {
-      const token = localStorage.getItem('token');
-      console.log(token)
-      const response = await fetch('/api/users/login', { // Adjust URL based on your route
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization':  `Bearer ${token}`                      },
-          body: JSON.stringify(data),
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+  
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+  
+    try {
+      const response = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
-
-      const result = await response.json();
-
+  
+      const data = await response.json();
+      //console.log(data)
+  
       if (response.ok) {
-          document.getElementById('message').textContent = result.message;
-          document.getElementById('message').style.color = 'green';
-          // Optionally redirect to login page or another page
-          //window.location.href = `https://qmap.adaintech.com/api/auth/dashboard/${result.user.id}`;
-
+        localStorage.setItem("token", data.token); // Store JWT Token
+        alert("Login successful!");
+        window.location.href = "/api/users/videocall"; // Redirect after login
       } else {
-          document.getElementById('message').textContent = result.message;
-          document.getElementById('message').style.color = 'red';
+        alert(data.error || "Login failed");
       }
-  } catch (error) {
-    console.log(error)
-      document.getElementById('message').textContent = 'An error occurred. Please try again.';
-      document.getElementById('message').style.color = 'red';
-  }finally{
-      //hode preloader
-      document.getElementById('preloader').style.display = 'none';
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+
+
+
+  // Fetch Protected Dashboard
+async function fetchDashboard() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("Not authorized, please log in");
+    window.location.href = "/login";
+    return;
   }
-});
+
+  const response = await fetch("/api/users/videocall", {
+    method: "GET",
+    headers: { "Authorization": `Bearer ${token}` },
+  });
+
+  const data = await response.json();
+
+  if (response.ok) {
+    document.getElementById("dashboardContent").innerText = data.message;
+  } else {
+    alert("Unauthorized access");
+    window.location.href = "/login";
+  }
+}
+
 

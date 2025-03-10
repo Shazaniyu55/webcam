@@ -20,15 +20,15 @@
           <h2>Register</h2>
           <p>Hey, register to continue</p>
     
-          <form action="/api/users/register" method="POST">
+          <form id="registerForm" >
             <div class="input-group">
                 <span class="input-icon">✉️</span>
-                <input type="email" name="email" placeholder="Enter your Username" required>
+                <input type="text" name="username" id="username" placeholder="Enter your Username" required>
               </div>
             <!-- Email Input -->
             <div class="input-group">
               <span class="input-icon">✉️</span>
-              <input type="email" name="email" placeholder="Enter your Email" required>
+              <input type="email" name="email" id="email" placeholder="Enter your Email" required>
             </div>
     
             <!-- Password Input -->
@@ -39,7 +39,7 @@
             </div>
     
     
-            <button type="submit" class="login-button">Login</button>
+            <button type="submit" class="login-button">Register</button>
           </form>
     
           <p class="register-text">
@@ -48,7 +48,7 @@
         </main>
       </div>
 
-  <script src="/js/login.js"></script>
+  <script src="/js/register.js"></script>
 
 
 
