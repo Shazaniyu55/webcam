@@ -17,8 +17,9 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 2650;
-const wss = new WebSocketServer({ port: 8080 });
 const server = http.createServer(app);
+const wss = new WebSocketServer({ server });
+
 
 
 interface Client {
