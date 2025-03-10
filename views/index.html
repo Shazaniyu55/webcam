@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebRTC Video Call</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
   <h1>WebRTC Video Call</h1>
@@ -12,7 +14,7 @@
   <video id="remoteVideo" autoplay style="width: 300px; border: 2px solid red;"></video>
   
   <br/><br/>
-  <button onclick="startLocalVideo()">Start Camera</button>
+  <button onclick="startLocalVideo()" id="camera-button">Start Camera</button>
   <br/><br/>
 
   <input type="text" id="remoteUserId" placeholder="Enter Remote User ID"/>

@@ -7,6 +7,8 @@ import websocket from "./util/websocket.js";
 import { fileURLToPath } from "url";
 import path from "path";
 import { WebSocketServer, WebSocket } from 'ws';
+import session  from "express-session";
+
 // Define __dirname equivalent in ES Module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,6 +33,13 @@ connectDB();
 app.use(express.static(path.join(__dirname, 'assets')))
 app.use(express.json());
 app.use("/api/users", userRoutes);
+
+app.use(session({
+  secret: 'webcamwebapp', 
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } 
+}));
 app.set('views', path.join(__dirname, 'views')); 
 
 
@@ -39,6 +48,9 @@ wss.on('connection', (ws) => {
     const clientId = generateClientId();
     clients.set(clientId, { id: clientId, socket: ws });  
     console.log(`Client ${clientId} connected`);
+
+     // Notify all users that a new client has joined
+  broadcast({ type: "userConnected", userId: clientId });
 
     ws.on('message', (message) => {
       const data = JSON.parse(message.toString());
@@ -59,6 +71,11 @@ wss.on('connection', (ws) => {
   function generateClientId() {
     return Math.random().toString(36).substring(7);
   }
+
+  // Function to broadcast messages to all clients
+function broadcast(message: object) {
+  clients.forEach(client => client.socket.send(JSON.stringify(message)));
+}
 
 app.get('/login', (req, res)=>{
     res.sendFile(path.join(__dirname, 'views', 'login.html'));

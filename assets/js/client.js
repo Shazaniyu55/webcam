@@ -11,6 +11,14 @@ socket.onmessage = async (event) => {
     console.log("Your User ID:", userId);
   }
 
+  if (data.type === "userConnected") {
+    showPopup(`User ${data.userId} has connected.`);
+  }
+
+  if (data.type === "userDisconnected") {
+    showPopup(`User ${data.userId} has disconnected.`);
+  }
+
   if (data.from) {
     remoteUserId = data.from;
     console.log(`Message from ${data.from}:`, data);
@@ -24,6 +32,22 @@ socket.onmessage = async (event) => {
     }
   }
 };
+
+function showPopup(message) {
+  const popup = document.createElement("div");
+  popup.innerText = message;
+  popup.style.position = "fixed";
+  popup.style.top = "20px";
+  popup.style.right = "20px";
+  popup.style.background = "rgba(0, 0, 0, 0.8)";
+  popup.style.color = "#fff";
+  popup.style.padding = "10px 20px";
+  popup.style.borderRadius = "5px";
+  popup.style.zIndex = "1000";
+  document.body.appendChild(popup);
+
+ 
+}
 
 // Start local camera
 async function startLocalVideo() {

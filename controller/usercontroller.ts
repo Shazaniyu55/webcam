@@ -34,4 +34,12 @@ const login =  async (req:any, res:any) => {
   }
 };
 
+const getusername = async (req:Request, res:Request)=>{
+  try {
+    const user = User.find
+  } catch (error) {
+    
+  }
+}
+
 export default {register, login};
