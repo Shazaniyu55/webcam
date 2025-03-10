@@ -1,4 +1,4 @@
-const socket = new WebSocket("wss://webcam-lac.vercel.app/videocall");
+const socket = new WebSocket("wss://webcam-production.up.railway.app/videocall");
 let localStream, peerConnection, userId, remoteUserId;
 const config = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 
