@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import { WebSocketServer, WebSocket } from 'ws';
 import session  from "express-session";
+import cors from "cors";
 
 // Define __dirname equivalent in ES Module
 const __filename = fileURLToPath(import.meta.url);
@@ -30,16 +31,26 @@ const clients = new Map<string, Client>();
 
 
 connectDB();
-app.use(express.static(path.join(__dirname, 'assets')))
-app.use(express.json());
-app.use("/api/users", userRoutes);
-
 app.use(session({
   secret: 'webcamwebapp', 
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false } 
 }));
+
+
+app.use(cors({
+  origin: "https://webcam-lac.vercel.app",          // Removed the trailing slash
+  methods: 'GET, POST, PUT, DELETE',       // Methods allowed
+  allowedHeaders: 'Content-Type, Authorization' // Corrected 'authorization' to 'Authorization'
+}));
+
+app.options('*', cors())
+app.use(express.static(path.join(__dirname, 'assets')))
+app.use(express.json());
+app.use("/api/users", userRoutes);
+
+
 app.set('views', path.join(__dirname, 'views')); 
 
 
