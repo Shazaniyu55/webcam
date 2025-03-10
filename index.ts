@@ -41,7 +41,7 @@ app.use(session({
 
 
 app.use(cors({
-  origin: "https://webcam-production.up.railway.app/videocall",          // Removed the trailing slash
+  origin: "*",     
   methods: 'GET, POST, PUT, DELETE',       // Methods allowed
   allowedHeaders: 'Content-Type, Authorization' // Corrected 'authorization' to 'Authorization'
 }));
