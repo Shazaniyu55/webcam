@@ -18,6 +18,10 @@ socket.onmessage = async (event) => {
   if (data.type === "userDisconnected") {
     showPopup(`User ${data.userId} has disconnected.`);
   }
+  if (data.type === "endCall") {
+    console.log("Call ended by remote user.");
+    endCall(); // Automatically end call when the other user hangs up
+  }
 
   if (data.from) {
     remoteUserId = data.from;
@@ -87,6 +91,28 @@ async function handleOffer(offer, from) {
 
   socket.send(JSON.stringify({ answer, to: from }));
   console.log("Answer sent to", from);
+}
+
+
+
+function endCall() {
+  if (peerConnection) {
+    peerConnection.close();
+    peerConnection = null;
+  }
+
+  if (localStream) {
+    localStream.getTracks().forEach(track => track.stop());
+    document.getElementById("localVideo").srcObject = null;
+  }
+
+  if (remoteUserId) {
+    socket.send(JSON.stringify({ type: "endCall", to: remoteUserId }));
+    console.log("Call ended and notified:", remoteUserId);
+  }
+
+  document.getElementById("remoteVideo").srcObject = null;
+  remoteUserId = null;
 }
 
 // Create WebRTC connection
