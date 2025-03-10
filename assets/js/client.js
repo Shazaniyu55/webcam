@@ -1,4 +1,4 @@
-const socket = new WebSocket("wss:https://webcam-lac.vercel.app");
+const socket = new WebSocket("wss://webcam-lac.vercel.app");
 let localStream, peerConnection, userId, remoteUserId;
 const config = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 
